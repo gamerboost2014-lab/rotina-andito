@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rotina Andito</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  /* Reset básico */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+    overflow: hidden;
+  }
+
+  .video-background iframe, .video-background #player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .white-circle {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    z-index: 5;
+  }
+
+  .container {
+    background: rgba(0, 0, 0, 0.65);
+    padding: 30px 25px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 0 25px rgba(0,0,0,0.7);
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100px;
+    margin: 0 auto 15px auto;
+    display: block;
+  }
+
+  button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  .output {
+    margin-top: 2em;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-left: 4px solid #3498db;
+    text-align: center;
+    color: #333;
+  }
+
+  .output h3, .output h4, .output p {
+    margin: 0 0 10px 0;
+  }
+
+  #diaInput:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52,152,219,0.5);
+  }
+</style>
+</head>
+<body>
+
+<div class="video-background">
+  <div id="player"></div>
+</div>
+
+<div class="container">
+  <h1>Rotina Andito</h1>
+  <p>Estamos no mês de Agosto.</p>
+
+  <label for="diaInput"><i class="fas fa-calendar-day"></i> Insere o dia desejado (13 a 31): </label>
+  <input type="number" id="diaInput" min="13" max="31" />
+  <button onclick="mostrarRotina()"><i class="fas fa-search"></i> Ver Rotina</button>
+
+  <div class="output" id="resultado"></div>
+</div>
+
+<script>
+function mostrarRotina() {
+  const dia = parseInt(document.getElementById('diaInput').value, 10);
+  const res = document.getElementById('resultado');
+
+  if (isNaN(dia) || dia < 13 || dia > 31) {
+    res.textContent = 'Informações não disponíveis para este dia.';
+    return;
+  }
+
+  // Definir responsáveis
+  let pequenoalmoco = '';
+  let almoco = '';
+  let jantar = '';
+  let loucaa = '';
+  let loucaj = '';
+
+  if ([13,16,19,21,25,29].includes(dia)) pequenoalmoco = 'ELISA';
+  if ([14,17,20,23,26,30].includes(dia)) almoco = 'ELISA';
+  if ([15,18,24,27,28].includes(dia)) jantar = 'ELISA';
+  if ([13,16,19,21,23,26,30].includes(dia)) loucaa = 'ELISA';
+  if ([14,17,20,24,27,28].includes(dia)) loucaj = 'ELISA';
+
+  if ([14,18,24,28].includes(dia)) pequenoalmoco = 'SHAILANE';
+  if ([15,18,20,22,25,28,31].includes(dia)) almoco = 'SHAILANE';
+  if ([16,19,20,26,29,30].includes(dia)) jantar = 'SHAILANE';
+  if ([14,25,27,31].includes(dia)) loucaa = 'SHAILANE';
+  if ([16,22,23].includes(dia)) loucaj = 'SHAILANE';
+
+  if ([17,23,27,31].includes(dia)) pequenoalmoco = 'LAERCIA';
+  if ([13,16,19,21,24,27,29].includes(dia)) almoco = 'LAERCIA';
+  if ([13,14,17,21,22,23,25,30,31].includes(dia)) jantar = 'LAERCIA';
+  if ([15,18,24,29].includes(dia)) loucaa = 'LAERCIA';
+  if ([13,19,26,30].includes(dia)) loucaj = 'LAERCIA';
+
+  if ([15,20,22,26,30].includes(dia)) pequenoalmoco = 'HODAVIO';
+  if ([17,20,22,28].includes(dia)) loucaa = 'HODAVIO';
+  if ([15,18,21,25,29,31].includes(dia)) loucaj = 'HODAVIO';
+
+  const cardapios = {
+    13: ['Leite com cereais + banana', 'Arroz com feijão + estufado de vaca + salada', 'Sopa de legumes + omelete com espinafres'],
+    14: ['Pão com manteiga + chá ou leite', 'Massa com atum e legumes salteados', 'Puré de batata + peito de frango grelhado'],
+    15: ['Iogurte com cereais e mel', 'Arroz + pescada estufada + legumes cozidos', 'Sopa + sandes de ovo mexido com alface'],
+    16: ['Leite com pão torrado + fruta', 'Feijoada simples com carne de porco', 'Arroz de legumes + ovos cozidos'],
+    17: ['Iogurte natural com fruta fresca', 'Filetes de pescada + batata cozida + brócolos', 'Esparguete à bolonhesa (carne de vaca) + salada verde'],
+    18: ['Panquecas simples + chá ou leite', 'Arroz de frango no forno com ervilhas', 'Hambúrguer caseiro ou pizza + salada'],
+    19: ['Pão com queijo fresco + sumo natural', 'Bacalhau à Brás ou assado no forno', 'Sopa rica + tostas ou sandes leves'],
+    20: ['Leite com cereais + banana', 'Arroz com feijão + estufado de vaca + salada', 'Sopa de legumes + omelete com espinafres'],
+    21: ['Pão com manteiga + chá ou leite', 'Massa com atum e legumes salteados', 'Puré de batata + peito de frango grelhado'],
+    22: ['Iogurte com cereais e mel', 'Arroz + pescada estufada + legumes cozidos', 'Sopa + sandes de ovo mexido com alface'],
+    23: ['Leite com pão torrado + fruta', 'Feijoada simples com carne de porco', 'Arroz de legumes + ovos cozidos'],
+    24: ['Iogurte natural com fruta fresca', 'Filetes de pescada + batata cozida + brócolos', 'Esparguete à bolonhesa (carne de vaca) + salada verde'],
+    25: ['Panquecas simples + chá ou leite', 'Arroz de frango no forno com ervilhas', 'Hambúrguer caseiro ou pizza + salada'],
+    26: ['Pão com queijo fresco + sumo natural', 'Bacalhau à Brás ou assado no forno', 'Sopa rica + tostas ou sandes leves'],
+    27: ['Leite com cereais + banana', 'Arroz com feijão + estufado de vaca + salada', 'Sopa de legumes + omelete com espinafres'],
+    28: ['Pão com manteiga + chá ou leite', 'Massa com atum e legumes salteados', 'Puré de batata + peito de frango grelhado'],
+    29: ['Iogurte com cereais e mel', 'Arroz + pescada estufada + legumes cozidos', 'Sopa + sandes de ovo mexido com alface'],
+    30: ['Leite com pão torrado + fruta', 'Feijoada simples com carne de porco', 'Arroz de legumes + ovos cozidos'],
+    31: ['Iogurte natural com fruta fresca', 'Filetes de pescada + batata cozida + brócolos', 'Esparguete à bolonhesa (carne de vaca) + salada verde']
+  };
+
+  const [cardapiopa, cardapioalmoco, cardapiojantar] = cardapios[dia];
+
+  res.innerHTML =
+`<div style="margin-bottom: 15px;">
+  <h3 style="color: #2c3e50; border-bottom: 1px solid #3498db; padding-bottom: 5px;">
+    <i class="far fa-calendar-alt"></i> Dia: ${dia}
+  </h3>
+</div>
+
+<div style="margin-bottom: 20px;">
+  <h4><i class="fas fa-tasks"></i> Tarefas domésticas</h4>
+  <p><i class="fas fa-coffee"></i> Pequeno almoço: ${pequenoalmoco || '---'}</p>
+  <p><i class="fas fa-utensils"></i> Almoço: ${almoco || '---'}</p>
+  <p><i class="fas fa-moon"></i> Jantar: ${jantar || '---'}</p>
+  <p><i class="fas fa-broom"></i> Louça do almoço: ${loucaa || '---'}</p>
+  <p><i class="fas fa-broom"></i> Louça do jantar: ${loucaj || '---'}</p>
+</div>
+
+<div>
+  <h4><i class="fas fa-book-open"></i> Cardápio</h4>
+  <p><i class="fas fa-bread-slice"></i> Pequeno almoço: ${cardapiopa}</p>
+  <p><i class="fas fa-drumstick-bite"></i> Almoço: ${cardapioalmoco}</p>
+  <p><i class="fas fa-pizza-slice"></i> Jantar: ${cardapiojantar}</p>
+</div>`;
+}
+</script>
+
+<!-- YouTube API -->
+<script>
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      videoId: 'G5RpJwCJDqc',
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        loop: 1,
+        mute: 1,
+        playlist: 'G5RpJwCJDqc',
+        modestbranding: 1,
+        fs: 0,
+        rel: 0,
+        showinfo: 0,
+        iv_load_policy: 3
+      },
+      events: {
+        onReady: function(event) {
+          event.target.mute();
+          event.target.playVideo();
+        }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
